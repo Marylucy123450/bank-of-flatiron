@@ -1,34 +1,63 @@
-import React, { useState } from "react";
-import Transaction from "./Transaction";
+import React from "react";
+import addTransaction from "./transactionsService"
 
-function AddTransactionForm() {
-  const [date, setDate] = useState("")
-  const [description, setDescription] = useState("")
-  const [category, setCategory] = useState("")
-  const [amount, setAmount] = useState("")
-  function handleSubmit(e) {
-    fetch("http://localhost:8001/transactions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        date: date,
-        description: description,
-        category: category,
-        amount: amount,
-      }),
-    });
-    alert("added successfully")
+
+let baseUrl = "http://localhost:8001"
+
+
+function AddTransactionForm({setTransactions}) {
+
+
+const addNewTransaction = (e) => {
+
+  e.preventDefault()
+
+  let transaction = {
+    date: document.querySelector("input[name='date']").value,
+    description: document.querySelector("input[name='description']").value,
+    category: document.querySelector("input[name='category']").value,
+    amount: document.querySelector("input[name='amount']").value,
   }
+
+  document.getElementById('myform').reset()
+
+
+  let postBody = JSON.stringify({
+    date: transaction.date,
+    description: transaction.description,
+    category: transaction.category,
+    amount: transaction.amount,
+    })
+    console.log(postBody);
+    
+    fetch(baseUrl + "/transactions",
+    {method: "POST", 
+    headers: {"Content-Type": "application/json"},
+    body: postBody}
+        
+    ).then(response => {
+        response= response.json()
+        setTransactions(prevTransactions => [...prevTransactions, transaction]);
+    })
+
+
+}
+
+
+
+
+
+
+
+
   return (
     <div className="ui segment">
-      <form onSubmit={handleSubmit} className="ui form">
+      <form className="ui form" id="myform" onSubmit={addNewTransaction}>
         <div className="inline fields">
-          <input value={date} onChange={(e) => setDate(e.target.value)} type="date" name="date" />
-          <input value={description} onChange={(e) => setDescription(e.target.value)} type="text" name="description" placeholder="Description" />
-          <input value={category} onChange={(e) => setCategory(e.target.value)} type="text" name="category" placeholder="Category" />
-          <input value={amount} onChange={(e) => setAmount(e.target.value)} type="number" name="amount" placeholder="Amount" step="0.01" />
+          <input type="date" name="date" />
+          <input type="text" name="description" placeholder="Description" />
+          <input type="text" name="category" placeholder="Category" />
+          <input type="number" name="amount" placeholder="Amount" step="0.01" />
         </div>
         <button className="ui button" type="submit">
           Add Transaction
@@ -36,6 +65,7 @@ function AddTransactionForm() {
       </form>
     </div>
   );
+
 }
 
 export default AddTransactionForm;

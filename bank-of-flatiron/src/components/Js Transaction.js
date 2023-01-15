@@ -1,12 +1,12 @@
 import React from "react";
 
-function Transaction({date, description, category, amount}) {
+function Transaction(props) {
   return (
     <tr>
-      <td>{date}</td>
-      <td>{description}</td>
-      <td>{category}</td>
-      <td>{amount}</td>
+      <td>{props.obj.date}</td>
+      <td>{props.obj.description}</td>
+      <td>{props.obj.category}</td>
+      <td>{props.obj.amount}</td>
     </tr>
   );
 }
