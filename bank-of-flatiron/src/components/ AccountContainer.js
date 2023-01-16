@@ -34,6 +34,7 @@ function filterTransactions(term) {
       <Search filterTransactions={filterTransactions} />
       <AddTransactionForm setTransactions={setTransactions} />
       <TransactionsList transactions={transactions} />
+      
     </div>
   );
 }

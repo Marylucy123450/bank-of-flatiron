@@ -1,3 +1,5 @@
+import React from 'react'
+
 let baseUrl = "http://localhost:8001"
 
 export default function getTransactions() {
