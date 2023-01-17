@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Transaction from "./Transaction";
 
-function AllAccountTransactionList() {
+
+function AddTransactionForm() {
   const [date, setDate] = useState("")
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
   const [amount, setAmount] = useState("")
   function handleSubmit(e) {
-    fetch("http://localhost:8001/transactions", {
+    fetch("http://localhost:3000/transactions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -19,7 +19,7 @@ function AllAccountTransactionList() {
         amount: amount,
       }),
     });
-     alert("added successfully")
+     alert("added")
   }
   return (
     <div className="ui segment">
@@ -38,4 +38,4 @@ function AllAccountTransactionList() {
   );
 }
 
-export default AllAccountTransactionList;
+export default AddTransactionForm;

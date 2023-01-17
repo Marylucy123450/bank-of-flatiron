@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
-import NewTransaction from "./NewTransaction";
-import SearchBar from "./SearchBar";
-import AllAccountTransactionList from "./AllAccountTransactionList";
+import TransactionsList from "./TransactionList";
+import Search from "./search";
+import AddTransactionForm from "./AddTransitionForm";
 
-function Accounts() {
+function AccountContainer() {
   const [transaction, setTransaction] = useState([])
   const [query, setQuery] = useState("")
   useEffect(() => {
     fetch("http://localhost:3000/transactions?q=" + query)
       .then((resp) => resp.json())
       .then(transaction => setTransaction(transaction))
-      console.log(transaction);
   }, [query])
-  function Search(e) {
+  function handleSearch(e) {
     setQuery(e.target.value)
   }
   return (
     <div>
-      <SearchBar handleSearch={Search} />
-      <NewTransaction/>
-      <AllAccountTransactionList transactions={transaction} />
+      <Search handleSearch={handleSearch} />
+      <AddTransactionForm />
+      <TransactionsList transactions={transaction} />
     </div>
   );
 }
 
-export default Accounts;
+export default AccountContainer;
